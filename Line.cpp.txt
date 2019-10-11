@@ -1,0 +1,154 @@
+#include "Line.h"
+
+
+Line::Line(const Point & a, const Point & b) : beginN(a), directionN(a, b),second(b)
+{
+
+}
+
+Line::Line(const Point & a, const Vector & b) : beginN(a), directionN(b),second(a.get_x()+b.get_x(),a.get_y()+b.get_y(),a.get_z()+b.get_z())
+{
+
+}
+
+Line::Line(const Line &b) : beginN(b.beginN), directionN(b.directionN),second(b.second)
+{
+
+}
+
+Vector Line::direction()
+{
+	return this->directionN;
+}
+
+Vector Line::normalVector()
+{
+	double l, m, n;
+	double x1, y11, z1;
+	double k;
+	l = directionN.get_x(); 
+	m = directionN.get_y();
+	n = directionN.get_z();
+	x1 = beginN.get_x();
+	y11 = beginN.get_y();
+	z1 = beginN.get_z();
+
+	k = (l*x1 + m * y11 + n * z1*n) / (pow(l, 2.0) + pow(m, 2.0) + pow(n, 2.0));
+	Vector rez(l*k + x1, m*k + y11, n*k + z1);
+	return rez;
+}
+double Line::degreeOfTwoLines(const Line &b)
+{
+	double dot = this->directionN.dotProduct(b.directionN);
+	double blet1 = this->directionN.get_x()*this->directionN.get_x()
+		+ this->directionN.get_y()*this->directionN.get_y()
+		+ this->directionN.get_z()*this->directionN.get_z();
+	double blet2 = b.directionN.get_x() * b.directionN.get_x()
+		+ b.directionN.get_y() * b.directionN.get_y()
+		+ b.directionN.get_z() * b.directionN.get_z();
+	double rez = acos(dot / sqrt(blet1*blet2));
+	return rez;
+}
+
+void Line::set_begin(const Point &b)
+{
+	beginN = b;
+}
+void Line::set_direction(const Vector&b)
+{
+	directionN = b;
+}
+void Line::set_second(const Point&b)
+{
+	second = b;
+}
+
+Point Line::get_begin() const
+{
+	return beginN;
+}
+Vector Line::get_direction() const
+{
+	return directionN;
+}
+Point Line::get_second()const
+{
+	return second;
+}
+
+Line& Line::operator=(const Line&b)
+{
+	beginN = b.beginN;
+	directionN = b.directionN;
+	return *this;
+}
+
+bool Line::operator+(const Point&b) // ne raboti za vsichki kordinati
+{
+	Vector AP(this->beginN, b);
+	Vector BP(this->second, b);
+	if (this->directionN == AP+BP || BP == AP + directionN || AP == BP + directionN)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool Line::operator||(const Line&b)
+{
+	bool isfound = false;
+	for (int i= 0; i < 20; i++)
+	{
+		if (this->directionN*i == b.directionN || directionN*(-i) == b.directionN)
+		{
+			isfound = true;
+			break;
+		}
+	}
+	return isfound;
+}
+
+bool Line::operator==(const Line&b)
+{
+	bool firstCh = this->operator+(b.beginN);
+	bool secondCh = this->operator+(b.second);
+	bool trd = this->operator||(b);
+	if (firstCh == true && secondCh == true && trd == true)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool Line::operator&&(const Line&b)
+{
+	if (this->directionN.crossProduct(b.directionN)==0)
+	{
+		return false;
+	}
+	return true;
+}
+
+std::ostream & operator<<(std::ostream &out, const Line &b)
+{
+	out << "Point A: " << b.beginN << std::endl << "Point B: " << b.second << std::endl << "Vector: " << b.directionN;
+	return out;
+}
+std::istream & operator>>(std::istream &in, Line &b)
+{
+	std::cout << "Point A: ";
+	in >> b.beginN;
+	std::cout << std::endl;
+	std::cout << "Point B: ";
+	in >> b.second;
+	std::cout << std::endl;
+	std::cout << "Vector: ";
+	in >> b.directionN;
+	std::cout << std::endl;
+	return in;
+}
+
+Line::~Line()
+{
+
+}

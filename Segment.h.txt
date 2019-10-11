@@ -1,0 +1,25 @@
+#pragma once
+#include "Line.h"
+class Segment :
+	public Line
+{
+public:
+	Segment(const Point &, const Vector &);
+	Segment(const Line &, int);
+	Segment(const Segment &);
+
+	double lenght();
+	Point center();
+
+	bool operator==(const Point&);
+
+	Segment& operator=(const Segment&);
+
+	friend std::ostream & operator<<(std::ostream &out, const Segment &b);
+	friend std::istream & operator>>(std::istream &in, Segment &b);
+
+	virtual ~Segment();
+private:
+	
+};
+

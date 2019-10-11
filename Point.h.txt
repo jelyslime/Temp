@@ -1,0 +1,28 @@
+#pragma once
+#include "Elements.h"
+class Point: public Elements
+{
+public:
+	Point(double x1=0, double y1=0, double z1=0);
+	Point(const Point & nam);
+
+	void set_x(int x1);
+	void set_y(int y1);
+	void set_z(int z1);
+
+	double get_x() const;
+	double get_y() const;
+	double get_z() const;
+
+	bool operator==(const Point & nam);
+
+	friend std::ostream & operator<<(std::ostream &out,const Point &b);
+	friend std::istream & operator>>(std::istream &in,Point &b);
+
+	
+	virtual ~Point();
+private:
+	double x;
+	double y;
+	double z;
+};

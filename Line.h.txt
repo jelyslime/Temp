@@ -1,0 +1,38 @@
+#include "Vector.h"
+class Line :
+	public Vector
+{
+public:
+	Line(const Point &, const Point &);
+	Line(const Point &,const Vector &);
+	Line(const Line &);
+
+	Vector direction();
+	Vector normalVector();
+	double degreeOfTwoLines(const Line &b);
+
+	void set_begin(const Point &);
+	void set_direction(const Vector&);
+	void set_second(const Point&);
+
+	Point get_begin() const;
+	Vector get_direction() const;
+	Point get_second() const;
+
+	Line& operator=(const Line&);
+	bool operator+(const Point&); //tochka leji na prava
+	bool operator||(const Line&); // usporedni dve pravi
+	bool operator==(const Line&); // suvpadat
+	bool operator&&(const Line&); // krustosani pravi
+	bool operator!=(const Line&);
+	bool operator|(const Line&);
+
+	friend std::ostream & operator<<(std::ostream &out, const Line &b);
+	friend std::istream & operator>>(std::istream &in, Line &b);
+
+	virtual ~Line();
+private:
+	Point beginN;
+	Vector directionN;
+	Point second;
+};

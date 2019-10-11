@@ -1,0 +1,55 @@
+#pragma once
+#include "Point.h"
+#include <iostream>
+class Vector :
+	public Point
+{
+public:
+	Vector(double = 0.0, double = 0.0, double = 0.0);
+	Vector(const Point&, const Point&);
+	Vector(const Vector&);
+	
+
+	double lenghtCalc() const;
+	double get_lenght() const;
+	
+	Vector direction() const;
+	double dotProduct(const Vector&); //skalarno proizvedenie
+	Vector projection(const Vector&); // proekciq na vektor
+	bool checkZero() const;
+	bool isParallel(const Vector&); // usporednost
+	Vector crossProduct(const Vector&); // vektorno proizvedenie
+	bool isPerpendicular(const Vector& b); //perpendikulqrnost
+
+	bool operator==(int);
+	bool operator==(const Vector&);
+
+	Vector operator+(double);
+	Vector operator-(double);
+	Vector operator*(double);
+	Vector operator/(double);
+
+	Vector operator+(const Vector&);
+	Vector operator-(const Vector&);
+	Vector operator^(const Vector&); // vektorno proizvedenie
+
+	Vector& operator=(const Vector&);
+	double operator*(const Vector&); // skalarno proizvedenie
+	double operator()(const Vector& v, const Vector& w); // smeseno
+
+	friend std::ostream & operator << (std::ostream &out, const Vector &b);
+	friend std::istream & operator >> (std::istream &in,Vector &b);
+
+	virtual ~Vector();
+
+private:
+	double lenght;
+
+};
+
+class VectorLengthException : public std::exception {
+public:
+	const char * what() const throw () {
+		return "the lenght of the vector is 0.";
+	}
+};

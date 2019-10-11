@@ -1,0 +1,8 @@
+#pragma once
+#include <iostream>
+class Elements
+{
+public:
+	Elements();
+	virtual ~Elements()=0;
+};

@@ -1,0 +1,196 @@
+#include "Triangle.h"
+
+Triangle::Triangle(Point &a,  Point &b,  Point &c) :A(a), B(b),C(c)
+{
+	try
+	{
+		if (a == b || a == c || b == c)
+		{
+			throw EqualPointException();
+		}
+		
+	}
+	catch (const EqualPointException& f)
+	{
+		std::cout << "Засечено изключение 'EqualPointException': " << f.what() << std::endl;
+	}
+
+	Vector abl(a, b);
+	Vector abl1(a, c);
+	Vector abl2(b,c);
+	AB = abl.get_lenght();
+	AC = abl1.get_lenght();
+	BC = abl2.get_lenght();
+}
+
+Triangle::Triangle(const Triangle&b) : A(b.A), B(b.B), C(b.C)
+{
+	AB = b.AB;
+	AC = b.AC;
+	BC = b.BC;
+}
+
+void Triangle::type()
+{
+	std::string rez;
+	if (AB==AC || AB == BC || AC == BC)
+	{
+		std::cout << "равнобедрен" << std::endl;
+	}
+
+	if (AB == AC && AB == BC && AC == BC)
+	{
+		std::cout << "равностранен" << std::endl;
+	}
+
+	double l = AB*AB;
+	double m = AC*AC;
+	double n = BC*BC;
+	double p = m + n;
+	if (l==p)
+	{
+		std::cout << "правоъгълен" << std::endl;
+	}
+	if (l > p)
+	{
+		std::cout << "тъпоъгълен" << std::endl;
+	}
+	if (l < p)
+	{
+		std::cout << "тъпоъгълен" << std::endl;
+	}
+	if (l > p)
+	{
+		std::cout << "остроъгълен" << std::endl;
+	}
+}
+
+double Triangle::perimeter()
+{
+	double l = (AB*BC*AC) / 2.0;
+	return l;
+}
+
+double Triangle::area()
+{
+	double l = this->perimeter();
+	double arr = sqrt(l*(l - AC)*(l - BC)*(l - AC));
+	return arr;
+}
+
+Point Triangle::centroid()
+{
+	double x1 = (A.get_x() + B.get_x() + C.get_x()) / 3;
+	double y1 = (A.get_y() + B.get_y() + C.get_y()) / 3;
+	double z1 = (A.get_z() + B.get_z() + C.get_z()) / 3;
+
+	return Point(x1, y1, z1);
+}
+
+bool operator<( Point&p,  Triangle&b)
+{
+	double a = b.area();
+	Triangle PAC(p, b.A, b.C);
+	double a1 = PAC.area();
+	Triangle PBC(p, b.B, b.C);
+	double a2 = PBC.area();
+	Triangle PAB(p, b.A, b.B);
+	double a3 = PAB.area();
+	if ((a1+a2+a3)==a)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool operator==(const Point&a, const Triangle&b)
+{
+	Vector PointToCurr(b.A, a);
+	Vector AB(b.A, b.B);
+	if (PointToCurr.crossProduct(AB)==0)
+	{
+		return true;
+	}
+	else
+	{
+		Vector AC(b.A, b.C);
+		if (PointToCurr.crossProduct(AC)==0)
+		{
+			return true;
+		}
+		else
+		{
+			Vector PointToCurr1(b.B, a);
+			Vector BC(b.B, b.C);
+			if (PointToCurr1.crossProduct(BC)==0)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
+
+}
+
+void Triangle::set_A(const Point&b)
+{
+	A = b;
+}
+void Triangle::set_B(const Point&b)
+{
+	B = b;
+}
+void Triangle::set_C(const Point&b)
+{
+	C = b;
+}
+
+Point Triangle::get_A()const
+{
+	return A;
+}
+Point Triangle::get_B()const
+{
+	return B;
+}
+Point Triangle::get_C()const
+{
+	return C;
+}
+
+Triangle& Triangle::operator=(const Triangle&b)
+{
+	A = b.A;
+	B = b.B;
+	C = b.C;
+	AB = b.AB;
+	AC = b.AC;
+	BC = b.BC;
+	return *this;
+}
+
+std::ostream & operator << (std::ostream &out, const Triangle &b)
+{
+	out << "A:" << b.A << std::endl << "B:" << b.B << std::endl << "C." << b.C;
+	return out;
+}
+std::istream & operator >> (std::istream &in,  Triangle &b)
+{
+	std::cout << "Enter x,y,z for A" << std::endl;
+	in >> b.A;
+	std::cout << "Enter x,y,z for B" << std::endl;
+	in >> b.B;
+	std::cout << "Enter x,y,z for C" << std::endl;
+	in >> b.C;
+	return in;
+}
+
+Triangle::~Triangle()
+{
+}

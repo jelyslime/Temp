@@ -1,0 +1,224 @@
+#include "Vector.h"
+#include <math.h>
+
+
+Vector::Vector(double x1, double y1, double z1) :Point(x1, y1, z1)
+{
+	lenght = this->lenghtCalc();
+}
+Vector::Vector(const Point& A, const Point& B) : Point(B.get_x() - A.get_x(), B.get_y() - A.get_y(), B.get_z() - A.get_z())
+{
+	lenght = this->lenghtCalc();
+}
+
+Vector::Vector(const Vector& b)
+{
+	this->set_x(b.get_x());
+	this->set_y(b.get_y());
+	this->set_z(b.get_z());
+	this->lenght = b.lenght;
+}
+
+double Vector::lenghtCalc() const
+{
+	double len = 0;
+	len = sqrt(pow(get_x(), 2.0) + pow(get_y(), 2.0) + pow(get_z(), 2.0));
+	return len;
+}
+
+double Vector::get_lenght() const
+{
+	return lenght;
+}
+
+Vector Vector::direction() const
+{
+	try
+	{
+		
+		if (this->lenght == 0)
+		{
+			throw VectorLengthException();
+		}
+		double direction2 = this->get_x() + this->get_y() + this->get_z() / this->lenght;
+		return Vector(direction2);
+
+	}
+	catch (VectorLengthException& f)
+	{
+		std::cout << "VectorLeghtExeption caught: " << f.what();
+		
+	}
+}
+
+double Vector::dotProduct(const Vector& b)
+{
+	double rez = this->get_x() * b.get_x() + this->get_y() * b.get_y() + this->get_z() * b.get_z();
+	return rez;
+}
+
+Vector Vector::projection(const Vector& b)
+{
+	double num = this->dotProduct(b) / pow(b.lenght, 2.0);
+	Vector c(b);
+	c = c * num;
+	return c;
+}
+
+bool Vector::checkZero() const
+{
+	bool isZero = false;
+	if (this->get_x()== 0 && this->get_y() == 0 && this->get_z() == 0)
+	{
+		isZero = true;
+	}
+	return isZero;
+}
+
+bool Vector::isParallel(const Vector& b) 
+{
+	try
+	{
+		if (this->lenght ==0 || b.lenght==0)
+		{
+			throw VectorLengthException();
+		}
+		bool parallel = false;
+		
+		if (this->crossProduct(b) == 0)
+		{
+			parallel = true;
+		}
+		return parallel;
+	}
+	catch (const VectorLengthException & f)
+	{
+		std::cout << "VectorLeghtExeption caught: " << f.what();
+	}
+}
+
+bool Vector::isPerpendicular(const Vector& b)
+{
+		try
+		{
+			if (this->checkZero() || b.checkZero())
+			{
+				throw VectorLengthException();
+			}
+			bool Perpendicular = false;
+
+			if (this->dotProduct(b) == 0)
+			{
+				Perpendicular = true;
+			}
+			return Perpendicular;
+		}
+		catch (const VectorLengthException & f)
+		{
+			std::cout << "VectorLeghtExeption caught: " << f.what();
+		}
+}
+
+Vector Vector::crossProduct(const Vector& b)
+{
+	double crossdX = (this->get_y() * b.get_z()) - (this->get_z() * b.get_y());
+	double crossdY = (this->get_x()* b.get_z()) - (this->get_z() * b.get_x());
+	double crossdZ = (this->get_x() * b.get_y()) - (this->get_y() * b.get_x());
+	return Vector(crossdX, crossdY, crossdZ);
+}
+
+
+bool Vector::operator==(int b)
+{
+	if (get_x() == b && this->get_y() == b && this->get_z() == b)
+	{
+		return true;
+	}
+	return false;
+}
+bool Vector::operator==(const Vector&b)
+{
+	if (this->get_x()==b.get_x() && this->get_y()==b.get_y() && this->get_z()==b.get_z())
+	{
+		return true;
+	}
+	return false;
+}
+
+Vector Vector::operator+(double b)
+{
+	Vector bs(this->get_x()+b, this->get_y()+b, this->get_z()+b);
+	return bs;
+}
+Vector Vector::operator-(double b) 
+{
+	Vector bs(this->get_x() - b, this->get_y() - b, this->get_z() - b);
+	return bs;
+}
+Vector Vector::operator*(double b)
+{
+	Vector bs(this->get_x() * b, this->get_y() * b, this->get_z() * b);
+	return bs;
+}
+Vector Vector::operator/(double b)
+{
+	Vector bs(this->get_x() / b, this->get_y() / b, this->get_z() / b);
+	return bs;
+}
+
+Vector Vector::operator+(const Vector& b)
+{
+	return Vector(this->get_x() + b.get_x(), this->get_y() + b.get_y(), this->get_z() + b.get_z());
+}
+Vector Vector::operator-(const Vector& b)
+{
+	return Vector(this->get_x() - b.get_x(), this->get_y() - b.get_y(), this->get_z() - b.get_z());
+}
+double Vector::operator*(const Vector& b)
+{
+	double rez = this->dotProduct(b);
+	return rez;
+}
+Vector Vector::operator^(const Vector&b)
+{
+	return this->crossProduct(b);
+}
+
+double Vector::operator()(const Vector& v, const Vector& w)
+{
+	Vector cr(this->crossProduct(v));
+	double rez = cr.dotProduct(w);
+	return rez;
+}
+
+
+Vector& Vector::operator=(const Vector& b)
+{
+	this->set_x(b.get_x());
+	this->set_y(b.get_y());
+	this->set_z(b.get_z());
+	this->lenght = b.lenght;
+	return *this;
+}
+
+std::ostream & operator << (std::ostream &out, const Vector &b)
+{
+	out << " x = " << b.get_x() << " y = " << b.get_y() << " z = " << b.get_z();
+	return out;
+}
+std::istream & operator >> (std::istream &in, Vector &b)
+{
+	double x1, y1, z1;
+	std::cout << "Въведете х,у,z за вектора" << std::endl;
+	in >> x1 >> y1 >> z1;
+	b.set_x(x1);
+	b.set_y(y1);
+	b.set_z(z1);
+	b.lenght = b.lenghtCalc();
+	return in;
+}
+
+Vector::~Vector()
+{
+
+}

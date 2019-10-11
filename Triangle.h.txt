@@ -1,0 +1,54 @@
+#pragma once
+#include "Point.h"
+#include "Vector.h"
+#include <iostream>
+#include <iostream>
+
+class Triangle :
+	public Point
+{
+public:
+	Triangle(Point&,Point&,Point&);
+	Triangle(const Triangle&);
+
+	double perimeter();
+	double area(); // lice
+	Point centroid(); // medicentur
+
+	void type();
+
+	void set_A(const Point&);
+	void set_B(const Point&);
+	void set_C(const Point&);
+
+	Point get_A()const;
+	Point get_B()const;
+	Point get_C()const;
+
+	Triangle& operator=(const Triangle&);
+	friend bool operator<( Point&,  Triangle&);
+	friend bool operator>(const Point&, const Triangle&);
+	friend bool operator==(const Point&, const Triangle&);
+	
+	friend std::ostream & operator << (std::ostream &out, const Triangle &b);
+	friend std::istream & operator >> (std::istream &in,  Triangle &b);
+
+	virtual ~Triangle();
+
+private:
+	Point A;
+	Point B;
+	Point C;
+	double AB; // izpolzvam vektori za da ne pisha formula za duljinata vseki put kato mi trqbva
+	double AC;
+	double BC;
+	
+};
+
+class EqualPointException : public std::exception {
+public:
+	const char * what() const throw() {
+		return "Еднакви точки.";
+	}
+	
+};

@@ -1,0 +1,53 @@
+#include "Segment.h"
+
+
+Segment::Segment(const Point &a, const Vector &b):Line(a,b)
+{
+
+}
+Segment::Segment(const Segment &b) :Line((Line)b)
+{
+	
+}
+
+double Segment::lenght()
+{
+	return this->get_direction().get_lenght();
+}
+
+Point Segment::center()
+{
+	double pX = (this->get_begin().get_x() + this->get_second().get_x()) / 2;
+	double pY = (this->get_begin().get_y() + this->get_second().get_y()) / 2;
+	double pZ = (this->get_begin().get_z() + this->get_second().get_z()) / 2;
+	return Point(pX, pY, pZ);
+}
+
+bool Segment::operator==(const Point&p)
+{
+	Vector APP(this->get_begin(), p);
+	Vector BP(this->get_second(), p);
+	if (APP+BP==this->get_direction())
+	{
+		return true;
+	}
+	return false;
+}
+
+Segment& Segment::operator=(const Segment& b)
+{
+	this->Line::operator=((Line)b);
+
+	return *this;
+}
+
+std::ostream & operator<<(std::ostream &out, const Segment &b)
+{
+	out << "Point A: " << b.get_begin() << std::endl << "Point B: " << b.get_second() << std::endl << "Vector: " << b.get_direction();
+	return out;
+}
+
+
+Segment::~Segment()
+{
+}

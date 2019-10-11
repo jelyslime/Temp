@@ -1,0 +1,1206 @@
+#include "Segment.h"
+#include "Triangle.h"
+#include <iostream>
+#include <fstream>
+#include <string>
+
+
+using namespace std;
+
+
+int main()
+{
+	setlocale(LC_ALL, "Bulgarian");
+
+
+	char input;
+
+	bool isActive = true;
+	bool isActiveLv2 = true;
+	bool isActiveLv3 = true;
+	while (isActive == true)
+	{
+		cout << endl << "Въведете 1 за четене от конзола." << endl << "Въведете 2 за четене от файл." << endl
+			<< "Въведете 0 за да спрете програмата." << endl;
+		cin >> input;
+		if (input == '0')
+		{
+			isActive = false;
+		}
+		else
+		{
+			isActive = true;
+		}
+		if (input == '1')
+		{
+			isActiveLv2 = true;
+			while (isActiveLv2 == true)
+			{
+				cout << endl << "Моля изберете вид геометричен обект:" << endl << "0.Върнете се назад" << endl << "1.Точка" << endl << "2.Вектор"
+					<< endl << "3.Линия" << endl << "4.Отсечка" << endl << "5.Триъгълник" << endl;
+				char inputLv2;
+				cin >> inputLv2;
+
+				if (inputLv2 == '0')
+				{
+					isActiveLv2 = false;
+				}
+				else
+				{
+					isActiveLv2 = true;
+				}
+				if (inputLv2 == '1')
+				{
+					isActiveLv3 = true;
+					Point a(0, 0, 0);
+					cin >> a;
+					while (isActiveLv3 == true)
+					{
+						cout << endl << "Изберете операция за точката:" << endl << "0.Върнете се назад"
+							<< endl << "1.Сравнение на две точки дали съвпадат." << endl;
+						char inputLv3;
+						cin >> inputLv3;
+						if (inputLv3 == '0')
+						{
+							isActiveLv3 = false;
+						}
+						if (inputLv3 == '1')
+						{
+							Point b(0, 0, 0);
+							cin >> b;
+							cout << "Точката А и точката Б съвпадат:" << boolalpha << a.operator==(b) << endl;
+						}
+					}
+				}
+				if (inputLv2 == '2')
+				{
+					isActiveLv3 = true;
+					cout << endl << "1.Въвеждане на вектор чрез 3 реални числа." << endl << "2.Въвеждане на вектор чрез 2 точки." << endl;
+					char tempInp;
+					cin >> tempInp;
+					Vector a(0, 0, 0);
+					if (tempInp == '1')
+					{
+						cin >> a;
+					}
+					if (tempInp == '2')
+					{
+						cout << "Точка А: " << endl;
+						Point a1(0, 0, 0);
+						cin >> a1;
+						cout << "Точка B: " << endl;
+						Point a2(0, 0, 0);
+						cin >> a2;
+						a = Vector(a1, a2);
+					}
+					while (isActiveLv3 == true)
+					{
+						cout << endl << "0.Върнете се назад" << endl << "1.Изчисляване дължина на вектор." << endl << "2.Изчисляване посока на вектор"
+							<< endl << "3.Проверка за нулев вектор" << endl << "4.Проверка за успоредност с текущ и зададен вектор"
+							<< endl << "5.Проверка за перпендикулярност с текущ и зададен вектор" << endl << "6.Събиране на два вектора"
+							<< endl << "7.Изваждане на два вектора" << endl << "8.Умножение на вектор с реално число"
+							<< endl << "9.Скаларно произведение на два вектора" << endl << "10.Векторно произведение на два вектора"
+							<< endl << "11.Смесено произведение на три вектора." << endl;
+						string inputLv3;
+						cin >> inputLv3;
+						if (inputLv3 == string("0"))
+						{
+							isActiveLv3 = false;
+						}
+						else
+						{
+							isActiveLv3 = true;
+						}
+						if (inputLv3 == string("1"))
+						{
+							cout << "Дължина на вектора: " << a.get_lenght() << endl;
+						}
+						if (inputLv3 == string("2"))
+						{
+							cout << "Посока на вектора: " << a.direction() << endl;
+						}
+						if (inputLv3 == string("3"))
+						{
+							cout << "Проверка за нулев вектор: " << boolalpha << a.checkZero() << endl;
+						}
+						if (inputLv3 == string("4"))
+						{
+							cout << endl << "1.Въвеждане на вектор чрез 3 реални числа." << endl << "2.Въвеждане на вектор чрез 2 точки." << endl;
+							char tempInp2;
+							cin >> tempInp2;
+							Vector b(0, 0, 0);
+							if (tempInp2 == '1')
+							{
+								cin >> b;
+							}
+							if (tempInp2 == '2')
+							{
+								cout << "Точка А: " << endl;
+								Point a1(0, 0, 0);
+								cin >> a1;
+								cout << "Точка B: " << endl;
+								Point a2(0, 0, 0);
+								cin >> a2;
+								b = Vector(a1, a2);
+							}
+							cout << "Успоредност между двата вектора: " << boolalpha << a.isParallel(b) << endl;
+						}
+						if (inputLv3 == string("5"))
+						{
+							cout << endl << "1.Въвеждане на вектор чрез 3 реални числа." << endl << "2.Въвеждане на вектор чрез 2 точки." << endl;
+							char tempInp2;
+							cin >> tempInp2;
+							Vector b(0, 0, 0);
+							if (tempInp2 == '1')
+							{
+								cin >> b;
+							}
+							if (tempInp2 == '2')
+							{
+								cout << "Точка А: " << endl;
+								Point a1(0, 0, 0);
+								cin >> a1;
+								cout << "Точка B: " << endl;
+								Point a2(0, 0, 0);
+								cin >> a2;
+								b = Vector(a1, a2);
+							}
+							cout << "Перпендикулярност между двата вектора: " << boolalpha << a.isPerpendicular(b) << endl;
+						}
+						if (inputLv3 == string("6"))
+						{
+							cout << endl << "1.Въвеждане на вектор чрез 3 реални числа." << endl << "2.Въвеждане на вектор чрез 2 точки." << endl;
+							char tempInp2;
+							cin >> tempInp2;
+							Vector b(0, 0, 0);
+							if (tempInp2 == '1')
+							{
+								cin >> b;
+							}
+							if (tempInp2 == '2')
+							{
+								cout << "Точка А: " << endl;
+								Point a1(0, 0, 0);
+								cin >> a1;
+								cout << "Точка B: " << endl;
+								Point a2(0, 0, 0);
+								cin >> a2;
+								b = Vector(a1, a2);
+							}
+							cout << "Събиране на двата вектора: " << a.operator+(b) << endl;
+						}
+						if (inputLv3 == string("7"))
+						{
+							cout << endl << "1.Въвеждане на вектор чрез 3 реални числа." << endl << "2.Въвеждане на вектор чрез 2 точки." << endl;
+							char tempInp2;
+							cin >> tempInp2;
+							Vector b(0, 0, 0);
+							if (tempInp2 == '1')
+							{
+								cin >> b;
+							}
+							if (tempInp2 == '2')
+							{
+								cout << "Точка А: " << endl;
+								Point a1(0, 0, 0);
+								cin >> a1;
+								cout << "Точка B: " << endl;
+								Point a2(0, 0, 0);
+								cin >> a2;
+								b = Vector(a1, a2);
+							}
+							cout << "Изваждане на двата вектора: " << a.operator-(b) << endl;
+						}
+						if (inputLv3 == string("8"))
+						{
+							cout << endl << "Въведете реално число" << endl;
+							double b = 0.0;
+							cin >> b;
+							cout << "Умножение на вектор с реално число: " << a.operator*(b) << endl;
+						}
+						if (inputLv3 == string("9"))
+						{
+							cout << endl << "1.Въвеждане на вектор чрез 3 реални числа." << endl << "2.Въвеждане на вектор чрез 2 точки." << endl;
+							char tempInp2;
+							cin >> tempInp2;
+							Vector b(0, 0, 0);
+							if (tempInp2 == '1')
+							{
+								cin >> b;
+							}
+							if (tempInp2 == '2')
+							{
+								cout << "Точка А: " << endl;
+								Point a1(0, 0, 0);
+								cin >> a1;
+								cout << "Точка B: " << endl;
+								Point a2(0, 0, 0);
+								cin >> a2;
+								b = Vector(a1, a2);
+							}
+							cout << "Скаларно произведение на двата вектора: " << a.dotProduct(b) << endl;
+						}
+						if (inputLv3 == string("10"))
+						{
+							cout << endl << "1.Въвеждане на вектор чрез 3 реални числа." << endl << "2.Въвеждане на вектор чрез 2 точки." << endl;
+							char tempInp2;
+							cin >> tempInp2;
+							Vector b(0, 0, 0);
+							if (tempInp2 == '1')
+							{
+								cin >> b;
+							}
+							if (tempInp2 == '2')
+							{
+								cout << "Точка А: " << endl;
+								Point a1(0, 0, 0);
+								cin >> a1;
+								cout << "Точка B: " << endl;
+								Point a2(0, 0, 0);
+								cin >> a2;
+								b = Vector(a1, a2);
+							}
+							cout << "Векторно произведение на двата вектора: " << a.crossProduct(b) << endl;
+						}
+						if (inputLv3 == string("11"))
+						{
+							cout << endl << "Въведете вектора v" << endl;
+							cout << endl << "1.Въвеждане на вектор чрез 3 реални числа." << endl << "2.Въвеждане на вектор чрез 2 точки." << endl;
+							char tempInp2;
+							cin >> tempInp2;
+							Vector b(0, 0, 0);
+							if (tempInp2 == '1')
+							{
+								cin >> b;
+							}
+							if (tempInp2 == '2')
+							{
+								cout << "Точка А: " << endl;
+								Point a1(0, 0, 0);
+								cin >> a1;
+								cout << "Точка B: " << endl;
+								Point a2(0, 0, 0);
+								cin >> a2;
+								b = Vector(a1, a2);
+							}
+							cout << endl << "Въведете вектора w" << endl;
+							cout << endl << "1.Въвеждане на вектор чрез 3 реални числа." << endl << "2.Въвеждане на вектор чрез 2 точки." << endl;
+							char tempInp3;
+							cin >> tempInp3;
+							Vector c(0, 0, 0);
+							if (tempInp3 == '1')
+							{
+								cin >> c;
+							}
+							if (tempInp3 == '2')
+							{
+								cout << "Точка А: " << endl;
+								Point a1(0, 0, 0);
+								cin >> a1;
+								cout << "Точка B: " << endl;
+								Point a2(0, 0, 0);
+								cin >> a2;
+								c = Vector(a1, a2);
+							}
+							cout << "Смесено произведение на двата вектора: " << a.operator()(b, c) << endl;
+						}
+					}
+
+				}/*kraq na vektori menu*/
+				if (inputLv2 == '3')
+				{
+					isActiveLv3 = true;
+					Line a(Point(0, 0, 0), Vector(0, 0, 0));
+					cout << endl << "1.Въвеждане на права точка и вектор" << endl << "2.Въвеждане на права чрез 2 точки." << endl;
+					char tempInp;
+					cin >> tempInp;
+					if (tempInp == '1')
+					{
+						Point A(0, 0, 0);
+						Vector B(0, 0, 0);
+						cout << "Точка А:" << endl;
+						cin >> A;
+						cout << endl << "Вектор В: " << endl;
+						cin >> B;
+						a = Line(A, B);
+					}
+					if (tempInp == '2')
+					{
+						Point A(0, 0, 0);
+						Point B(0, 0, 0);
+						cout << "Точка А:" << endl;
+						cin >> A;
+						cout << endl << "Точка В: " << endl;
+						cin >> B;
+						a = Line(A, B);
+					}
+					while (isActiveLv3 == true)
+					{
+						cout << endl << "0.Върнете се назад" << endl << "1.Намиране на посока на правата" << endl << "2.Намиране на нормален вектор"
+							<< endl << "3.Намиране на ъгъл между две прави" << endl << "4.Проверка дали дадена точка лежи на дадената права"
+							<< endl << "5.Проверка дали дадена права е успоредна на друга права" << endl << "6.Проверка дали права съвпада с друга права"
+							<< endl << "7.Проверка дали права пресича друга права" << endl << "8.Проверка дали права е кръстосана с друга права"
+							<< endl << "9.Проверка дали права е перпендикулярна на друга права" << endl;
+						string inputLv3;
+						cin >> inputLv3;
+						if (inputLv3 == string("0"))
+						{
+							isActiveLv3 = false;
+						}
+						else
+						{
+							isActiveLv3 = true;
+						}
+						if (inputLv3 == string("1"))
+						{
+							cout << "Посоката на правата: " << a.direction() << endl;
+						}
+						if (inputLv3 == string("2"))
+						{
+							cout << "Нормален вектор на правата: " << a.normalVector() << endl;
+						}
+						if (inputLv3 == string("3"))
+						{
+							Line b(Point(0, 0, 0), Vector(0, 0, 0));
+							cout << endl << "1.Въвеждане на права точка и вектор" << endl << "2.Въвеждане на права чрез 2 точки." << endl;
+							char tempInp1;
+							cin >> tempInp1;
+							if (tempInp1 == '1')
+							{
+								Point A(0, 0, 0);
+								Vector B(0, 0, 0);
+								cout << "Точка А:" << endl;
+								cin >> A;
+								cout << endl << "Вектор В: " << endl;
+								cin >> B;
+								b = Line(A, B);
+							}
+							if (tempInp1 == '2')
+							{
+								Point A(0, 0, 0);
+								Point B(0, 0, 0);
+								cout << "Точка А:" << endl;
+								cin >> A;
+								cout << endl << "Точка В: " << endl;
+								cin >> B;
+								b = Line(A, B);
+							}
+							cout << "Ъгъл между двете прави: " << a.degreeOfTwoLines(b) << endl;
+						}
+						if (inputLv3 == string("4"))
+						{
+							cout << "Въведете Точката В: " << endl;
+							Point b(0, 0, 0);
+							cin >> b;
+
+							cout << "Проверка дали дадена точка лежи на дадената права " << boolalpha << a.operator+(b) << endl;
+						}
+						if (inputLv3 == string("5"))
+						{
+							Line b(Point(0, 0, 0), Vector(0, 0, 0));
+							cout << endl << "1.Въвеждане на права точка и вектор" << endl << "2.Въвеждане на права чрез 2 точки." << endl;
+							char tempInp1;
+							cin >> tempInp1;
+							if (tempInp1 == '1')
+							{
+								Point A(0, 0, 0);
+								Vector B(0, 0, 0);
+								cout << "Точка А:" << endl;
+								cin >> A;
+								cout << endl << "Вектор В: " << endl;
+								cin >> B;
+								b = Line(A, B);
+							}
+							if (tempInp1 == '2')
+							{
+								Point A(0, 0, 0);
+								Point B(0, 0, 0);
+								cout << "Точка А:" << endl;
+								cin >> A;
+								cout << endl << "Точка В: " << endl;
+								cin >> B;
+								b = Line(A, B);
+							}
+							cout << "Проверка дали дадена права е успоредна на друга права: " << boolalpha << a.operator||(b) << endl;
+						}
+						if (inputLv3 == string("6"))
+						{
+							Line b(Point(0, 0, 0), Vector(0, 0, 0));
+							cout << endl << "1.Въвеждане на права точка и вектор" << endl << "2.Въвеждане на права чрез 2 точки." << endl;
+							char tempInp1;
+							cin >> tempInp1;
+							if (tempInp1 == '1')
+							{
+								Point A(0, 0, 0);
+								Vector B(0, 0, 0);
+								cout << "Точка А:" << endl;
+								cin >> A;
+								cout << endl << "Вектор В: " << endl;
+								cin >> B;
+								b = Line(A, B);
+							}
+							if (tempInp1 == '2')
+							{
+								Point A(0, 0, 0);
+								Point B(0, 0, 0);
+								cout << "Точка А:" << endl;
+								cin >> A;
+								cout << endl << "Точка В: " << endl;
+								cin >> B;
+								b = Line(A, B);
+							}
+							cout << "Проверка дали права съвпада с друга права: " << boolalpha << a.operator==(b) << endl;
+						}
+						if (inputLv3 == string("7"))
+						{
+							Line b(Point(0, 0, 0), Vector(0, 0, 0));
+							cout << endl << "1.Въвеждане на права точка и вектор" << endl << "2.Въвеждане на права чрез 2 точки." << endl;
+							char tempInp1;
+							cin >> tempInp1;
+							if (tempInp1 == '1')
+							{
+								Point A(0, 0, 0);
+								Vector B(0, 0, 0);
+								cout << "Точка А:" << endl;
+								cin >> A;
+								cout << endl << "Вектор В: " << endl;
+								cin >> B;
+								b = Line(A, B);
+							}
+							if (tempInp1 == '2')
+							{
+								Point A(0, 0, 0);
+								Point B(0, 0, 0);
+								cout << "Точка А:" << endl;
+								cin >> A;
+								cout << endl << "Точка В: " << endl;
+								cin >> B;
+								b = Line(A, B);
+							}
+							cout << "Проверка дали права пресича друга права: " << boolalpha << a.operator&&(b) << endl;
+						}
+						if (inputLv3 == string("8"))
+						{
+							cout << "Under construction :)" << endl;
+						}
+						if (inputLv3 == string("9"))
+						{
+							cout << "Under construction :)" << endl;
+						}
+					}
+
+				}/*kraq na pravata*/
+				if (inputLv2 == '4')
+				{
+					isActiveLv3 = true;
+					Segment a(Point(0, 0, 0), Vector(0, 0, 0));
+					cout << endl << "Въвеждане на права точка и вектор" << endl;
+					char tempInp;
+					cin >> tempInp;
+					Point A(0, 0, 0);
+					Vector B(0, 0, 0);
+					cout << "Точка А:" << endl;
+					cin >> A;
+					cout << endl << "Вектор В: " << endl;
+					cin >> B;
+					a = Segment(A, B);
+					while (isActiveLv3 == true)
+					{
+						cout << endl << "0.Върнете се назад." << endl << "1.Намиране на дължина на отсетчка."
+							<< endl << "2.Намиране на среда на отсечка" << endl << "3.Проверка дали точка лежи на дадена отсечка" << endl;
+						string inputLv3;
+						cin >> inputLv3;
+						if (inputLv3 == string("0"))
+						{
+							isActiveLv3 = false;
+						}
+						else
+						{
+							isActiveLv3 = true;
+						}
+						if (inputLv3 == string("1"))
+						{
+							cout << "Намиране на дължината на отсетчката: " << a.lenght() << endl;
+						}
+						if (inputLv3 == string("2"))
+						{
+							cout << "Намиране на среда на отсетчката: " << a.center() << endl;
+						}
+						if (inputLv3 == string("3"))
+						{
+							Point b(0, 0, 0);
+							cout << "Точка В:" << endl;
+							cin >> b;
+							cout << endl << "Проверка дали точка лежи на дадена отсечка " << boolalpha << a.operator==(b) << endl;
+						}
+
+					}
+				}	//krai na otsetchka
+				if (inputLv2 == '5')
+				{
+					isActiveLv3 = true;
+					cout << "Точка А: " << endl;
+					Point a1(0, 0, 0);
+					cin >> a1;
+					cout << "Точка B: " << endl;
+					Point a2(0, 0, 0);
+					cin >> a2;
+					cout << "Точка C: " << endl;
+					Point a3(0, 0, 0);
+					cin >> a3;
+					Triangle a(a1, a2, a3);
+					while (isActiveLv3 == true)
+					{
+						cout << endl << "0.Върнете се назад." << endl << "1.Определяне вида на триъгълника." << endl << "2.Намиране лицето на триъгълника."
+							<< endl << "3.Намиране периметъра на триъгълника." << endl << "4.Намиране медицентъра на триъгълника."
+							<< endl << "5.Проверка дали точката лежи в равнината на триъгълника и е от вътрешността му."
+							<< endl << "6.Проверка дали точката лежи в равнината на триъгълника и е извън вътрешността му."
+							<< endl << "7.Проверка дали точката лежи на някоя от страните на триъгълника." << endl;
+						string inputLv3;
+						cin >> inputLv3;
+						if (inputLv3 == string("0"))
+						{
+							isActiveLv3 = false;
+						}
+						else
+						{
+							isActiveLv3 = true;
+						}
+						if (inputLv3 == string("1"))
+						{
+							cout << endl << "Определяне вида на триъгълника: ";
+							a.type();
+						}
+						if (inputLv3 == string("2"))
+						{
+							cout << endl << "Намиране лицето на триъгълника: " << a.area() << endl;
+						}
+						if (inputLv3 == string("3"))
+						{
+							cout << endl << "Намиране периметъра на триъгълника: " << a.perimeter() << endl;
+						}
+						if (inputLv3 == string("4"))
+						{
+							cout << endl << "Намиране медицентъра на триъгълника: " << a.centroid() << endl;
+						}
+						if (inputLv3 == string("5"))
+						{
+							Point A(0, 0, 0);
+							cout << "Точка А:" << endl;
+							cin >> A;
+							cout << endl << "Проверка дали точката лежи в равнината на триъгълника и е от вътрешността му: "
+								<< boolalpha << operator<(A, a);
+						}
+						if (inputLv3 == string("6"))
+						{
+							Point A(0, 0, 0);
+							cout << "Точка А:" << endl;
+							cin >> A;
+							cout << endl << "Проверка дали точката лежи в равнината на триъгълника и е извън вътрешността му. "
+								<< "Under construction :)";
+						}
+						if (inputLv3 == string("7"))
+						{
+							Point A(0, 0, 0);
+							cout << "Точка А:" << endl;
+							cin >> A;
+							cout << endl << "Проверка дали точката лежи на някоя от страните на триъгълника: "
+								<< boolalpha << operator==(A, a);
+						}
+					}
+				}
+			}
+		}
+	
+			// kraq na if=1
+		if (input == '2') // faila trqbva zavurshva na dve 0
+		{
+			cout << "Въведете локацията на файла"<<endl<<"*Трябва да използвате \\ а не единично*" << endl;
+			string locationOfF;
+			//cin >> locationOfF;
+			locationOfF = "C:\\Users\\User\\Desktop\\testov.txt";
+			ifstream myFile("C:\\Users\\User\\Desktop\\testov.txt");
+			isActiveLv2 = true;
+			while (isActiveLv2 == true)
+			{
+				cout << endl << "Моля изберете вид геометричен обект:" << endl << "0.Върнете се назад" << endl << "1.Точка" << endl << "2.Вектор"
+					<< endl << "3.Линия" << endl << "4.Отсечка" << endl << "5.Триъгълник" << endl;
+				char inputLv2;
+				myFile >> inputLv2;
+
+				if (inputLv2 == '0')
+				{
+					isActiveLv2 = false;
+				}
+				else
+				{
+					isActiveLv2 = true;
+				}
+				if (inputLv2 == '1')
+				{
+					isActiveLv3 = true;
+					Point a(0, 0, 0);
+					myFile >> a;
+					while (isActiveLv3 == true)
+					{
+						cout << endl << "Изберете операция за точката:" << endl << "0.Върнете се назад"
+							<< endl << "1.Сравнение на две точки дали съвпадат." << endl;
+						char inputLv3;
+						myFile >> inputLv3;
+						if (inputLv3 == '0')
+						{
+							isActiveLv3 = false;
+						}
+						if (inputLv3 == '1')
+						{
+							Point b(0, 0, 0);
+							myFile >> b;
+							cout << "Точката А и точката Б съвпадат:" << boolalpha << a.operator==(b) << endl;
+						}
+					}
+				}
+				if (inputLv2 == '2')
+				{
+					isActiveLv3 = true;
+					cout << endl << "1.Въвеждане на вектор чрез 3 реални числа." << endl << "2.Въвеждане на вектор чрез 2 точки." << endl;
+					char tempInp;
+					myFile >> tempInp;
+					Vector a(0, 0, 0);
+					if (tempInp == '1')
+					{
+						myFile >> a;
+					}
+					if (tempInp == '2')
+					{
+						cout << "Точка А: " << endl;
+						Point a1(0, 0, 0);
+						myFile >> a1;
+						cout << "Точка B: " << endl;
+						Point a2(0, 0, 0);
+						myFile >> a2;
+						a = Vector(a1, a2);
+					}
+					while (isActiveLv3 == true)
+					{
+						cout << endl << "0.Върнете се назад" << endl << "1.Изчисляване дължина на вектор." << endl << "2.Изчисляване посока на вектор"
+							<< endl << "3.Проверка за нулев вектор" << endl << "4.Проверка за успоредност с текущ и зададен вектор"
+							<< endl << "5.Проверка за перпендикулярност с текущ и зададен вектор" << endl << "6.Събиране на два вектора"
+							<< endl << "7.Изваждане на два вектора" << endl << "8.Умножение на вектор с реално число"
+							<< endl << "9.Скаларно произведение на два вектора" << endl << "10.Векторно произведение на два вектора"
+							<< endl << "11.Смесено произведение на три вектора." << endl;
+						string inputLv3;
+						myFile >> inputLv3;
+						if (inputLv3 == string("0"))
+						{
+							isActiveLv3 = false;
+						}
+						else
+						{
+							isActiveLv3 = true;
+						}
+						if (inputLv3 == string("1"))
+						{
+							cout << "Дължина на вектора: " << a.get_lenght() << endl;
+						}
+						if (inputLv3 == string("2"))
+						{
+							cout << "Посока на вектора: " << a.direction() << endl;
+						}
+						if (inputLv3 == string("3"))
+						{
+							cout << "Проверка за нулев вектор: " << boolalpha << a.checkZero() << endl;
+						}
+						if (inputLv3 == string("4"))
+						{
+							cout << endl << "1.Въвеждане на вектор чрез 3 реални числа." << endl << "2.Въвеждане на вектор чрез 2 точки." << endl;
+							char tempInp2;
+							myFile >> tempInp2;
+							Vector b(0, 0, 0);
+							if (tempInp2 == '1')
+							{
+								myFile >> b;
+							}
+							if (tempInp2 == '2')
+							{
+								cout << "Точка А: " << endl;
+								Point a1(0, 0, 0);
+								myFile >> a1;
+								cout << "Точка B: " << endl;
+								Point a2(0, 0, 0);
+								myFile >> a2;
+								b = Vector(a1, a2);
+							}
+							cout << "Успоредност между двата вектора: " << boolalpha << a.isParallel(b) << endl;
+						}
+						if (inputLv3 == string("5"))
+						{
+							cout << endl << "1.Въвеждане на вектор чрез 3 реални числа." << endl << "2.Въвеждане на вектор чрез 2 точки." << endl;
+							char tempInp2;
+							myFile >> tempInp2;
+							Vector b(0, 0, 0);
+							if (tempInp2 == '1')
+							{
+								myFile >> b;
+							}
+							if (tempInp2 == '2')
+							{
+								cout << "Точка А: " << endl;
+								Point a1(0, 0, 0);
+								myFile >> a1;
+								cout << "Точка B: " << endl;
+								Point a2(0, 0, 0);
+								myFile >> a2;
+								b = Vector(a1, a2);
+							}
+							cout << "Перпендикулярност между двата вектора: " << boolalpha << a.isPerpendicular(b) << endl;
+						}
+						if (inputLv3 == string("6"))
+						{
+							cout << endl << "1.Въвеждане на вектор чрез 3 реални числа." << endl << "2.Въвеждане на вектор чрез 2 точки." << endl;
+							char tempInp2;
+							myFile >> tempInp2;
+							Vector b(0, 0, 0);
+							if (tempInp2 == '1')
+							{
+								myFile >> b;
+							}
+							if (tempInp2 == '2')
+							{
+								cout << "Точка А: " << endl;
+								Point a1(0, 0, 0);
+								myFile >> a1;
+								cout << "Точка B: " << endl;
+								Point a2(0, 0, 0);
+								myFile >> a2;
+								b = Vector(a1, a2);
+							}
+							cout << "Събиране на двата вектора: " << a.operator+(b) << endl;
+						}
+						if (inputLv3 == string("7"))
+						{
+							cout << endl << "1.Въвеждане на вектор чрез 3 реални числа." << endl << "2.Въвеждане на вектор чрез 2 точки." << endl;
+							char tempInp2;
+							myFile >> tempInp2;
+							Vector b(0, 0, 0);
+							if (tempInp2 == '1')
+							{
+								myFile >> b;
+							}
+							if (tempInp2 == '2')
+							{
+								cout << "Точка А: " << endl;
+								Point a1(0, 0, 0);
+								myFile >> a1;
+								cout << "Точка B: " << endl;
+								Point a2(0, 0, 0);
+								myFile >> a2;
+								b = Vector(a1, a2);
+							}
+							cout << "Изваждане на двата вектора: " << a.operator-(b) << endl;
+						}
+						if (inputLv3 == string("8"))
+						{
+							cout << endl << "Въведете реално число" << endl;
+							double b = 0.0;
+							myFile >> b;
+							cout << "Умножение на вектор с реално число: " << a.operator*(b) << endl;
+						}
+						if (inputLv3 == string("9"))
+						{
+							cout << endl << "1.Въвеждане на вектор чрез 3 реални числа." << endl << "2.Въвеждане на вектор чрез 2 точки." << endl;
+							char tempInp2;
+							myFile >> tempInp2;
+							Vector b(0, 0, 0);
+							if (tempInp2 == '1')
+							{
+								myFile >> b;
+							}
+							if (tempInp2 == '2')
+							{
+								cout << "Точка А: " << endl;
+								Point a1(0, 0, 0);
+								myFile >> a1;
+								cout << "Точка B: " << endl;
+								Point a2(0, 0, 0);
+								myFile >> a2;
+								b = Vector(a1, a2);
+							}
+							cout << "Скаларно произведение на двата вектора: " << a.dotProduct(b) << endl;
+						}
+						if (inputLv3 == string("10"))
+						{
+							cout << endl << "1.Въвеждане на вектор чрез 3 реални числа." << endl << "2.Въвеждане на вектор чрез 2 точки." << endl;
+							char tempInp2;
+							myFile >> tempInp2;
+							Vector b(0, 0, 0);
+							if (tempInp2 == '1')
+							{
+								myFile >> b;
+							}
+							if (tempInp2 == '2')
+							{
+								cout << "Точка А: " << endl;
+								Point a1(0, 0, 0);
+								myFile >> a1;
+								cout << "Точка B: " << endl;
+								Point a2(0, 0, 0);
+								myFile >> a2;
+								b = Vector(a1, a2);
+							}
+							cout << "Векторно произведение на двата вектора: " << a.crossProduct(b) << endl;
+						}
+						if (inputLv3 == string("11"))
+						{
+							cout << endl << "Въведете вектора v" << endl;
+							cout << endl << "1.Въвеждане на вектор чрез 3 реални числа." << endl << "2.Въвеждане на вектор чрез 2 точки." << endl;
+							char tempInp2;
+							myFile >> tempInp2;
+							Vector b(0, 0, 0);
+							if (tempInp2 == '1')
+							{
+								myFile >> b;
+							}
+							if (tempInp2 == '2')
+							{
+								cout << "Точка А: " << endl;
+								Point a1(0, 0, 0);
+								myFile >> a1;
+								cout << "Точка B: " << endl;
+								Point a2(0, 0, 0);
+								myFile >> a2;
+								b = Vector(a1, a2);
+							}
+							cout << endl << "Въведете вектора w" << endl;
+							cout << endl << "1.Въвеждане на вектор чрез 3 реални числа." << endl << "2.Въвеждане на вектор чрез 2 точки." << endl;
+							char tempInp3;
+							myFile >> tempInp3;
+							Vector c(0, 0, 0);
+							if (tempInp3 == '1')
+							{
+								myFile >> c;
+							}
+							if (tempInp3 == '2')
+							{
+								cout << "Точка А: " << endl;
+								Point a1(0, 0, 0);
+								myFile >> a1;
+								cout << "Точка B: " << endl;
+								Point a2(0, 0, 0);
+								myFile >> a2;
+								c = Vector(a1, a2);
+							}
+							cout << "Смесено произведение на двата вектора: " << a.operator()(b, c) << endl;
+						}
+					}
+
+				}/*kraq na vektori menu*/
+				if (inputLv2 == '3')
+				{
+					isActiveLv3 = true;
+					Line a(Point(0, 0, 0), Vector(0, 0, 0));
+					cout << endl << "1.Въвеждане на права точка и вектор" << endl << "2.Въвеждане на права чрез 2 точки." << endl;
+					char tempInp;
+					myFile >> tempInp;
+					if (tempInp == '1')
+					{
+						Point A(0, 0, 0);
+						Vector B(0, 0, 0);
+						cout << "Точка А:" << endl;
+						myFile >> A;
+						cout << endl << "Вектор В: " << endl;
+						myFile >> B;
+						a = Line(A, B);
+					}
+					if (tempInp == '2')
+					{
+						Point A(0, 0, 0);
+						Point B(0, 0, 0);
+						cout << "Точка А:" << endl;
+						myFile >> A;
+						cout << endl << "Точка В: " << endl;
+						myFile >> B;
+						a = Line(A, B);
+					}
+					while (isActiveLv3 == true)
+					{
+						cout << endl << "0.Върнете се назад" << endl << "1.Намиране на посока на правата" << endl << "2.Намиране на нормален вектор"
+							<< endl << "3.Намиране на ъгъл между две прави" << endl << "4.Проверка дали дадена точка лежи на дадената права"
+							<< endl << "5.Проверка дали дадена права е успоредна на друга права" << endl << "6.Проверка дали права съвпада с друга права"
+							<< endl << "7.Проверка дали права пресича друга права" << endl << "8.Проверка дали права е кръстосана с друга права"
+							<< endl << "9.Проверка дали права е перпендикулярна на друга права" << endl;
+						string inputLv3;
+						myFile >> inputLv3;
+						if (inputLv3 == string("0"))
+						{
+							isActiveLv3 = false;
+						}
+						else
+						{
+							isActiveLv3 = true;
+						}
+						if (inputLv3 == string("1"))
+						{
+							cout << "Посоката на правата: " << a.direction() << endl;
+						}
+						if (inputLv3 == string("2"))
+						{
+							cout << "Нормален вектор на правата: " << a.normalVector() << endl;
+						}
+						if (inputLv3 == string("3"))
+						{
+							Line b(Point(0, 0, 0), Vector(0, 0, 0));
+							cout << endl << "1.Въвеждане на права точка и вектор" << endl << "2.Въвеждане на права чрез 2 точки." << endl;
+							char tempInp1;
+							myFile >> tempInp1;
+							if (tempInp1 == '1')
+							{
+								Point A(0, 0, 0);
+								Vector B(0, 0, 0);
+								cout << "Точка А:" << endl;
+								myFile >> A;
+								cout << endl << "Вектор В: " << endl;
+								myFile >> B;
+								b = Line(A, B);
+							}
+							if (tempInp1 == '2')
+							{
+								Point A(0, 0, 0);
+								Point B(0, 0, 0);
+								cout << "Точка А:" << endl;
+								myFile >> A;
+								cout << endl << "Точка В: " << endl;
+								myFile >> B;
+								b = Line(A, B);
+							}
+							cout << "Ъгъл между двете прави: " << a.degreeOfTwoLines(b) << endl;
+						}
+						if (inputLv3 == string("4"))
+						{
+							cout << "Въведете Точката В: " << endl;
+							Point b(0, 0, 0);
+							myFile >> b;
+
+							cout << "Проверка дали дадена точка лежи на дадената права " << boolalpha << a.operator+(b) << endl;
+						}
+						if (inputLv3 == string("5"))
+						{
+							Line b(Point(0, 0, 0), Vector(0, 0, 0));
+							cout << endl << "1.Въвеждане на права точка и вектор" << endl << "2.Въвеждане на права чрез 2 точки." << endl;
+							char tempInp1;
+							myFile >> tempInp1;
+							if (tempInp1 == '1')
+							{
+								Point A(0, 0, 0);
+								Vector B(0, 0, 0);
+								cout << "Точка А:" << endl;
+								myFile >> A;
+								cout << endl << "Вектор В: " << endl;
+								myFile >> B;
+								b = Line(A, B);
+							}
+							if (tempInp1 == '2')
+							{
+								Point A(0, 0, 0);
+								Point B(0, 0, 0);
+								cout << "Точка А:" << endl;
+								myFile >> A;
+								cout << endl << "Точка В: " << endl;
+								myFile >> B;
+								b = Line(A, B);
+							}
+							cout << "Проверка дали дадена права е успоредна на друга права: " << boolalpha << a.operator||(b) << endl;
+						}
+						if (inputLv3 == string("6"))
+						{
+							Line b(Point(0, 0, 0), Vector(0, 0, 0));
+							cout << endl << "1.Въвеждане на права точка и вектор" << endl << "2.Въвеждане на права чрез 2 точки." << endl;
+							char tempInp1;
+							myFile >> tempInp1;
+							if (tempInp1 == '1')
+							{
+								Point A(0, 0, 0);
+								Vector B(0, 0, 0);
+								cout << "Точка А:" << endl;
+								myFile >> A;
+								cout << endl << "Вектор В: " << endl;
+								myFile >> B;
+								b = Line(A, B);
+							}
+							if (tempInp1 == '2')
+							{
+								Point A(0, 0, 0);
+								Point B(0, 0, 0);
+								cout << "Точка А:" << endl;
+								myFile >> A;
+								cout << endl << "Точка В: " << endl;
+								myFile >> B;
+								b = Line(A, B);
+							}
+							cout << "Проверка дали права съвпада с друга права: " << boolalpha << a.operator==(b) << endl;
+						}
+						if (inputLv3 == string("7"))
+						{
+							Line b(Point(0, 0, 0), Vector(0, 0, 0));
+							cout << endl << "1.Въвеждане на права точка и вектор" << endl << "2.Въвеждане на права чрез 2 точки." << endl;
+							char tempInp1;
+							myFile >> tempInp1;
+							if (tempInp1 == '1')
+							{
+								Point A(0, 0, 0);
+								Vector B(0, 0, 0);
+								cout << "Точка А:" << endl;
+								myFile >> A;
+								cout << endl << "Вектор В: " << endl;
+								myFile >> B;
+								b = Line(A, B);
+							}
+							if (tempInp1 == '2')
+							{
+								Point A(0, 0, 0);
+								Point B(0, 0, 0);
+								cout << "Точка А:" << endl;
+								myFile >> A;
+								cout << endl << "Точка В: " << endl;
+								myFile >> B;
+								b = Line(A, B);
+							}
+							cout << "Проверка дали права пресича друга права: " << boolalpha << a.operator&&(b) << endl;
+						}
+						if (inputLv3 == string("8"))
+						{
+							cout << "Under construction :)" << endl;
+						}
+						if (inputLv3 == string("9"))
+						{
+							cout << "Under construction :)" << endl;
+						}
+					}
+
+				}/*kraq na pravata*/
+				if (inputLv2 == '4')
+				{
+					isActiveLv3 = true;
+					Segment a(Point(0, 0, 0), Vector(0, 0, 0));
+					cout << endl << "Въвеждане на права точка и вектор" << endl;
+					char tempInp;
+					myFile >> tempInp;
+					Point A(0, 0, 0);
+					Vector B(0, 0, 0);
+					cout << "Точка А:" << endl;
+					myFile >> A;
+					cout << endl << "Вектор В: " << endl;
+					myFile >> B;
+					a = Segment(A, B);
+					while (isActiveLv3 == true)
+					{
+						cout << endl << "0.Върнете се назад." << endl << "1.Намиране на дължина на отсетчка."
+							<< endl << "2.Намиране на среда на отсечка" << endl << "3.Проверка дали точка лежи на дадена отсечка" << endl;
+						string inputLv3;
+						myFile >> inputLv3;
+						if (inputLv3 == string("0"))
+						{
+							isActiveLv3 = false;
+						}
+						else
+						{
+							isActiveLv3 = true;
+						}
+						if (inputLv3 == string("1"))
+						{
+							cout << "Намиране на дължината на отсетчката: " << a.lenght() << endl;
+						}
+						if (inputLv3 == string("2"))
+						{
+							cout << "Намиране на среда на отсетчката: " << a.center() << endl;
+						}
+						if (inputLv3 == string("3"))
+						{
+							Point b(0, 0, 0);
+							cout << "Точка В:" << endl;
+							myFile >> b;
+							cout << endl << "Проверка дали точка лежи на дадена отсечка " << boolalpha << a.operator==(b) << endl;
+						}
+
+					}
+					}//krai na otsetchka
+					if (inputLv2 == '5')
+					{
+						isActiveLv3 = true;
+						cout << "Точка А: " << endl;
+						Point a1(0, 0, 0);
+						myFile >> a1;
+						cout << "Точка B: " << endl;
+						Point a2(0, 0, 0);
+						myFile >> a2;
+						cout << "Точка C: " << endl;
+						Point a3(0, 0, 0);
+						myFile >> a3;
+						Triangle a(a1, a2, a3);
+						while (isActiveLv3 == true)
+						{
+							cout << endl << "0.Върнете се назад." << endl << "1.Определяне вида на триъгълника." << endl << "2.Намиране лицето на триъгълника."
+								<< endl << "3.Намиране периметъра на триъгълника." << endl << "4.Намиране медицентъра на триъгълника."
+								<< endl << "5.Проверка дали точката лежи в равнината на триъгълника и е от вътрешността му."
+								<< endl << "6.Проверка дали точката лежи в равнината на триъгълника и е извън вътрешността му."
+								<< endl << "7.Проверка дали точката лежи на някоя от страните на триъгълника." << endl;
+							string inputLv3;
+							myFile >> inputLv3;
+							if (inputLv3 == string("0"))
+							{
+								isActiveLv3 = false;
+							}
+							else
+							{
+								isActiveLv3 = true;
+							}
+							if (inputLv3 == string("1"))
+							{
+								cout << endl << "Определяне вида на триъгълника: ";
+								a.type();
+							}
+							if (inputLv3 == string("2"))
+							{
+								cout << endl << "Намиране лицето на триъгълника: " << a.area() << endl;
+							}
+							if (inputLv3 == string("3"))
+							{
+								cout << endl << "Намиране периметъра на триъгълника: " << a.perimeter() << endl;
+							}
+							if (inputLv3 == string("4"))
+							{
+								cout << endl << "Намиране медицентъра на триъгълника: " << a.centroid() << endl;
+							}
+							if (inputLv3 == string("5"))
+							{
+								Point A(0, 0, 0);
+								cout << "Точка А:" << endl;
+								myFile >> A;
+								cout << endl << "Проверка дали точката лежи в равнината на триъгълника и е от вътрешността му: "
+									<< boolalpha << operator<(A, a);
+							}
+							if (inputLv3 == string("6"))
+							{
+								Point A(0, 0, 0);
+								cout << "Точка А:" << endl;
+								myFile >> A;
+								cout << endl << "Проверка дали точката лежи в равнината на триъгълника и е извън вътрешността му. "
+									<< "Under construction :)";
+							}
+							if (inputLv3 == string("7"))
+							{
+								Point A(0, 0, 0);
+								cout << "Точка А:" << endl;
+								myFile >> A;
+								cout << endl << "Проверка дали точката лежи на някоя от страните на триъгълника: "
+									<< boolalpha << operator==(A, a);
+							}
+						}
+					}
+				
+			}
+
+		}
+	}
+		return 0;
+}
+

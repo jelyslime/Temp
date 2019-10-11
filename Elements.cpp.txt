@@ -1,0 +1,12 @@
+#include "Elements.h"
+#include <iostream>
+
+
+Elements::Elements()
+{
+}
+
+
+Elements::~Elements()
+{
+}
